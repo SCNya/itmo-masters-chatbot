@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "master-program-chatbot"
+version = "0.1.0"
+description = "A chatbot to help applicants choose between two master's programs."
+authors = ["Jules"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+requests = "^2.28.1"
+beautifulsoup4 = "^4.11.1"
+python-telegram-bot = {extras = ["urllib3"], version = "^22.3"}
+PyPDF2 = "^2.10.0"
+pandas = "^2.3.1"
+scikit-learn = "^1.7.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "*"
+coverage = "^6.4.2"
+pre-commit = "^2.20.0"
+black = "^22.6.0"
+isort = "^5.10.1"
+flake8 = "^5.0.4"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.1"
+pytest-asyncio = "^1.1.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
