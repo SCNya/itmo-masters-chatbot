@@ -9,7 +9,7 @@ def recommend_courses(user_background: str, courses: pd.DataFrame) -> pd.DataFra
     """
     vectorizer = TfidfVectorizer(stop_words="english")
 
-    course_descriptions = courses["course_name"] + " " + courses["course_type"]
+    course_descriptions = courses["course_name"]
 
     tfidf_matrix = vectorizer.fit_transform(course_descriptions)
 

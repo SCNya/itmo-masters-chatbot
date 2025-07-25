@@ -145,16 +145,7 @@ async def handle_message(
                     "Управление AI-продуктами",
                     "Принятие решений на основе данных",
                     "UX для ИИ",
-                ],
-                "course_type": [
-                    "обязательный",
-                    "обязательный",
-                    "элективный",
-                    "обязательный",
-                    "обязательный",
-                    "элективный",
-                ],
-                "credits": [3, 4, 4, 3, 4, 4],
+                ]
             }
         )
 
@@ -165,7 +156,7 @@ async def handle_message(
             "рекомендуемых элективных курсов:\n\n"
         )
         for _, row in (
-            recommendations[recommendations["course_type"] == "элективный"]
+            recommendations
             .head(3)
             .iterrows()
         ):
@@ -185,7 +176,7 @@ def main() -> None:
     """Запускает бота."""
     application = (
         Application.builder()
-        .token("7602127348:AAG5lmyFCbndDepZFTaVCiSorG8-_itnDB4")
+        .token("")
         .build()
     )
 
