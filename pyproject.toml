@@ -12,9 +12,9 @@ python-telegram-bot = {extras = ["urllib3"], version = "^22.3"}
 PyPDF2 = "^2.10.0"
 pandas = "^2.3.1"
 scikit-learn = "^1.7.1"
-langchain = "^0.2.11"
-langchain-community = "^0.2.8"
-langchain-openai = "^0.1.18"
+langchain = "^0.2.17"
+langchain-community = "^0.2.19"
+langchain-openai = "^0.1.25"
 faiss-cpu = "^1.8.0"
 
 [tool.poetry.dev-dependencies]
