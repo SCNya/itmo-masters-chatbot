@@ -66,7 +66,14 @@ async def get_program_info(
 *Поступление:* {data['admission']}
     """
 
-    await update.message.reply_text(message, parse_mode="Markdown")
+    try:
+        await update.message.reply_text(message, parse_mode="Markdown")
+    except Exception as e:
+        if "Message is too long" in str(e):
+            for i in range(0, len(message), 4096):
+                await update.message.reply_text(message[i : i + 4096])
+        else:
+            await update.message.reply_text(message, parse_mode=None)
 
 
 async def recommend_command(
