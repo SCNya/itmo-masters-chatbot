@@ -185,7 +185,7 @@ def main() -> None:
     """Запускает бота."""
     application = (
         Application.builder()
-        .token("")
+        .token("7602127348:AAG5lmyFCbndDepZFTaVCiSorG8-_itnDB4")
         .build()
     )
 
