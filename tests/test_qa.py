@@ -4,7 +4,7 @@ from master_program_chatbot.qa import create_qa_chain, get_answer
 
 
 def test_create_qa_chain():
-    with patch("master_program_chatbot.qa.OpenAIEmbeddings"), patch(
+    with patch("master_program_chatbot.qa.HuggingFaceEmbeddings"), patch(
         "master_program_chatbot.qa.FAISS"
     ), patch("master_program_chatbot.qa.ChatOpenAI"), patch(
         "master_program_chatbot.qa.RetrievalQA"

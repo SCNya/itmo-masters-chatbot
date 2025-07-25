@@ -1,7 +1,8 @@
 from langchain.chains import RetrievalQA
 from langchain_community.document_loaders import TextLoader
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_openai import ChatOpenAI
 from langchain_text_splitters import CharacterTextSplitter
 
 
@@ -18,16 +19,15 @@ def create_qa_chain(text: str):
     text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
     texts = text_splitter.split_documents(documents)
 
-    embeddings = OpenAIEmbeddings(
-        openai_api_key="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",
-        openai_api_base="https://openrouter.ai/api/v1",
+    embeddings = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
     )
     vectorstore = FAISS.from_documents(texts, embeddings)
 
     llm = ChatOpenAI(
-        model_name="qwen/qwen3-235b-a22b-07-25:free",
-        openai_api_key="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",
-        openai_api_base="https://openrouter.ai/api/v1",
+        model_name="Qwen/Qwen3-235B-A22B-Instruct-2507:novita",
+        openai_api_key="",
+        openai_api_base="https://router.huggingface.co/v1",
     )
 
     qa_chain = RetrievalQA.from_chain_type(
