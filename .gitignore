@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+
+# Poetry
+.poetry
+
+# IDE
+.idea/
+.vscode/
+
+# Other
+*.log
+*.pot
+*.potc
+*.sqlite3
