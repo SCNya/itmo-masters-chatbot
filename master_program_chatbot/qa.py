@@ -19,14 +19,14 @@ def create_qa_chain(text: str):
     texts = text_splitter.split_documents(documents)
 
     embeddings = OpenAIEmbeddings(
-        openai_api_key="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",
+        openai_api_key="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",
         openai_api_base="https://openrouter.ai/api/v1",
     )
     vectorstore = FAISS.from_documents(texts, embeddings)
 
     llm = ChatOpenAI(
         model_name="qwen/qwen3-235b-a22b-07-25:free",
-        openai_api_key="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",
+        openai_api_key="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",
         openai_api_base="https://openrouter.ai/api/v1",
     )
 
