@@ -9,6 +9,7 @@ from telegram.ext import (
     MessageHandler,
     filters,
 )
+from telegram.helpers import escape_markdown
 
 from master_program_chatbot.data.parser import parse_program_info
 from master_program_chatbot.recommender import recommend_courses
@@ -65,9 +66,10 @@ async def get_program_info(
 *Карьера:* {data['career']}
 *Поступление:* {data['admission']}
     """
+    safe_message = escape_markdown(message, version=2)
 
     try:
-        await update.message.reply_text(message, parse_mode="Markdown")
+        await update.message.reply_text(safe_message, parse_mode="MarkdownV2")
     except Exception as e:
         if "Message is too long" in str(e):
             for i in range(0, len(message), 4096):
