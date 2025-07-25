@@ -107,17 +107,25 @@ async def handle_message(
         program_data = context.user_data.get("program_data")
 
         if not program_data:
-            await update.message.reply_text(
-                "Сначала выберите программу с помощью /ai или /aiproduct."
+            ai_data = parse_program_info(AI_URL)
+            aiproduct_data = parse_program_info(AI_PRODUCT_URL)
+            text = (
+                f"Название: {ai_data['title']}\n"
+                f"Описание: {ai_data['description']}\n"
+                f"Карьера: {ai_data['career']}\n"
+                f"Поступление: {ai_data['admission']}\n\n"
+                f"Название: {aiproduct_data['title']}\n"
+                f"Описание: {aiproduct_data['description']}\n"
+                f"Карьера: {aiproduct_data['career']}\n"
+                f"Поступление: {aiproduct_data['admission']}"
             )
-            return
-
-        text = (
-            f"Название: {program_data['title']}\n"
-            f"Описание: {program_data['description']}\n"
-            f"Карьера: {program_data['career']}\n"
-            f"Поступление: {program_data['admission']}"
-        )
+        else:
+            text = (
+                f"Название: {program_data['title']}\n"
+                f"Описание: {program_data['description']}\n"
+                f"Карьера: {program_data['career']}\n"
+                f"Поступление: {program_data['admission']}"
+            )
 
         qa_chain = create_qa_chain(text)
         answer = get_answer(qa_chain, question)
