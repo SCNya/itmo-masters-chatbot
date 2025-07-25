@@ -148,11 +148,38 @@ async def test_handle_message_qa_no_program_data():
     update.message.text = "What is the admission process?"
     update.message.reply_text = AsyncMock()
     context = MagicMock()
-    context.user_data = {"state": "awaiting_question"}
-    await handle_message(update, context)
-    update.message.reply_text.assert_called_once_with(
-        "Сначала выберите программу с помощью /ai или /aiproduct."
-    )
+    context.user_data = {"state": "awaiting_question", "program_data": None}
+    with patch(
+        "master_program_chatbot.bot.parse_program_info"
+    ) as mock_parse_program_info:
+        mock_parse_program_info.side_effect = [
+            {
+                "title": "AI Program",
+                "description": "AI Description",
+                "career": "AI Career",
+                "admission": "AI Admission",
+            },
+            {
+                "title": "AI Product Program",
+                "description": "AI Product Description",
+                "career": "AI Product Career",
+                "admission": "AI Product Admission",
+            },
+        ]
+        with patch(
+            "master_program_chatbot.bot.create_qa_chain"
+        ) as mock_create_qa_chain:
+            mock_qa_chain = MagicMock()
+            mock_create_qa_chain.return_value = mock_qa_chain
+            with patch("master_program_chatbot.bot.get_answer") as mock_get_answer:
+                mock_get_answer.return_value = "The admission process is..."
+                await handle_message(update, context)
+                mock_create_qa_chain.assert_called_once()
+                mock_get_answer.assert_called_once_with(
+                    mock_qa_chain, "What is the admission process?"
+                )
+    update.message.reply_text.assert_called_once_with("The admission process is...")
+    assert context.user_data["state"] is None
 
 
 @pytest.mark.asyncio
