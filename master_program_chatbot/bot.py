@@ -2,8 +2,13 @@ import logging
 
 import pandas as pd
 from telegram import Update
-from telegram.ext import (Application, CommandHandler, ContextTypes,
-                          MessageHandler, filters)
+from telegram.ext import (
+    Application,
+    CommandHandler,
+    ContextTypes,
+    MessageHandler,
+    filters,
+)
 
 from master_program_chatbot.data.parser import parse_program_info
 from master_program_chatbot.recommender import recommend_courses
@@ -37,7 +42,9 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     )
 
 
-async def get_program_info(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def get_program_info(
+    update: Update, context: ContextTypes.DEFAULT_TYPE
+) -> None:
     """Получает информацию о программе."""
     program = update.message.text.split("/")[1]
     if program == "ai":
@@ -62,19 +69,23 @@ async def get_program_info(update: Update, context: ContextTypes.DEFAULT_TYPE) -
     await update.message.reply_text(message, parse_mode="Markdown")
 
 
-async def recommend_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def recommend_command(
+    update: Update, context: ContextTypes.DEFAULT_TYPE
+) -> None:
     """Запрашивает у пользователя информацию о его бэкграунде."""
     context.user_data["state"] = "awaiting_background"
-    await update.message.reply_text("Пожалуйста, опишите свой бэкграунд и интересы.")
+    await update.message.reply_text(
+        "Пожалуйста, опишите свой бэкграунд и интересы."
+    )
 
 
-async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def handle_message(
+    update: Update, context: ContextTypes.DEFAULT_TYPE
+) -> None:
     """Обрабатывает обычное сообщение."""
     if context.user_data.get("state") == "awaiting_background":
         user_background = update.message.text
 
-        # Это заглушка для реальных данных о курсах.
-        # Мне нужно будет извлечь курсы из данных программы.
         courses = pd.DataFrame(
             {
                 "course_name": [
@@ -104,7 +115,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             "рекомендуемых элективных курсов:\n\n"
         )
         for _, row in (
-            recommendations[recommendations["course_type"] == "elective"]
+            recommendations[recommendations["course_type"] == "элективный"]
             .head(3)
             .iterrows()
         ):
@@ -122,7 +133,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
 def main() -> None:
     """Запускает бота."""
-    application = Application.builder().token("YOUR_TOKEN").build()
+    application = (
+        Application.builder()
+        .token("7602127348:AAG5lmyFCbndDepZFTaVCiSorG8-_itnDB4")
+        .build()
+    )
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("help", help_command))

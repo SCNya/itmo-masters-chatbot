@@ -12,4 +12,4 @@ This chatbot helps applicants choose between two master's programs at ITMO Unive
 
 1. Clone the repository.
 2. Install the dependencies: `poetry install`
-3. Run the bot: `poetry run python bot.py`
+3. Run the bot: `poetry run python master_program_chatbot/bot.py`
