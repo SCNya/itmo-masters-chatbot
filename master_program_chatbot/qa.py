@@ -43,5 +43,17 @@ def get_answer(qa_chain, question: str) -> str:
     """
     Получает ответ на вопрос из цепочки QA.
     """
+    
+    prompt = f"""
+    Is the following question '{question}' relevant to the context of Master's programs in AI and AI Product Management?
+    Answer 'yes' or 'no'.
+    """
+
+    llm = qa_chain.combine_documents_chain.llm_chain.llm
+    relevance_response = llm.invoke(prompt)
+
+    if "no" in relevance_response.content.lower():
+        return "Извините, я могу отвечать только на вопросы о магистерских программах по искусственному интеллекту и управлению AI-продуктами."
+
     answer = qa_chain.run(question)
     return answer
